@@ -24,10 +24,12 @@ const Kurssi = (props) => {
         )
   }
 
-  return ([
-    <Otsikko kurssi={props.kurssi.nimi} />,
-    <Sisalto osat={props.kurssi.osat} />,
-    ])
+  return (
+    <div>
+      <Otsikko kurssi={props.kurssi.nimi} />
+      <Sisalto osat={props.kurssi.osat} />
+    </div>
+  )
 }
 
 const App = () => {
@@ -53,9 +55,7 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Kurssi kurssi={kurssi} />
-    </div>
+    <Kurssi kurssi={kurssi} />
   )
 }
 
