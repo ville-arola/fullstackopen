@@ -24,10 +24,18 @@ const Kurssi = (props) => {
         )
   }
 
+  const Lukumaara = (props) => {
+    
+    return (
+      <p>Yhteensä {props.osat.reduce((acc, val) => acc + val.tehtavia, 0)} tehtävää</p>
+    )
+  }
+
   return (
     <div>
       <Otsikko kurssi={props.kurssi.nimi} />
       <Sisalto osat={props.kurssi.osat} />
+      <Lukumaara osat={props.kurssi.osat} />
     </div>
   )
 }
