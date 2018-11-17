@@ -1,46 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Kurssi from './components/Kurssi.js'
 
-
-const Kurssi = (props) => {
-
-  const Otsikko = (props) => {
-    return (
-        <h1>{props.kurssi}</h1>
-    )
-  }
-
-  const Sisalto = (props) => {
-      const Osa = (props) => {
-          return (
-              <p>{props.osa.nimi} {props.osa.tehtavia}</p>
-          )
-      }
-
-      return (
-          <div>
-            {props.osat.map(osa => <Osa key={osa.id} osa={osa} />)}
-          </div>
-        )
-  }
-
-  const Lukumaara = (props) => {
-    
-    return (
-      <p>Yhteensä {props.osat.reduce((acc, val) => acc + val.tehtavia, 0)} tehtävää</p>
-    )
-  }
-
-  return (
-    <div>
-      <Otsikko kurssi={props.kurssi.nimi} />
-      <Sisalto osat={props.kurssi.osat} />
-      <Lukumaara osat={props.kurssi.osat} />
-    </div>
-  )
-}
-
-const App = () => {
+const App = ({kurssi}) => {
   const kurssit = [
     {
       nimi: 'Half Stack -sovelluskehitys',
@@ -83,7 +45,7 @@ const App = () => {
 
   return (
     <div>
-      {kurssit.map(kurssi => <Kurssi kurssi={kurssi} />)}
+      {kurssit.map(kurssi => <Kurssi key={kurssi.id} kurssi={kurssi} />)}
     </div>
   )
 }
