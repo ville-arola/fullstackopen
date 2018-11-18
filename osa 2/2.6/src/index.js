@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Person from './components/Person'
+import FilterForm from './components/FilterForm'
+import AddPersonForm from './components/AddPersonForm';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,37 +20,7 @@ class App extends React.Component {
     }
   }
 
-  addPerson = (event) => {
-    event.preventDefault()
-
-    if (this.state.persons.filter(p => { return p.name === this.state.newName }).length === 0) {
-      const person = {
-        name: this.state.newName,
-        number: this.state.newNumber,
-      }
-      const persons = this.state.persons.concat(person)
-      this.setState({
-        persons,
-        newName: '',
-        newNumber: '',
-      })
-    }
-  }
-
-  handleNameChange = (event) => {
-    this.setState({ newName: event.target.value })
-  }
-
-  handleNumberChange = (event) => {
-    this.setState({ newNumber: event.target.value })
-  }
-
-  handleNameFilterChange = (event) => {
-    this.setState({ nameFilter: event.target.value })
-  }
-
   render() {
-
     const filteredPersons = this.state.persons.filter(person => {
       return person.name.toLocaleLowerCase().indexOf(this.state.nameFilter.toLocaleLowerCase()) !== -1;
     })
@@ -55,22 +28,11 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <form onSubmit={this.addPerson}>
-          <div>
-            rajaa näytettäviä: <input value={this.state.nameFilter} onChange={this.handleNameFilterChange} />
-          </div>
-          <div>
-            nimi: <input value={this.state.newName} onChange={this.handleNameChange} />
-          </div>
-          <div>
-            numero: <input value={this.state.newNumber} onChange={this.handleNumberChange} />
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-        </form>
+        <FilterForm parent={this} />
+        <h3>Lisää henkilö</h3>
+        <AddPersonForm parent={this} />
         <h2>Numerot</h2>
-        {filteredPersons.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+        {filteredPersons.map(person => <Person key={person.name} person={person} />)}
       </div>
     )
   }
