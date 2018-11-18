@@ -14,16 +14,17 @@ class App extends React.Component {
 
   addPerson = (event) => {
     event.preventDefault()
-    const person = {
-      name: this.state.newName,
+
+    if (this.state.persons.filter(p => { return p.name === this.state.newName }).length === 0) {
+      const person = {
+        name: this.state.newName,
+      }
+      const persons = this.state.persons.concat(person)
+      this.setState({
+        persons,
+        newName: ''
+      })
     }
-  
-    const persons = this.state.persons.concat(person)
-  
-    this.setState({
-      persons,
-      newName: ''
-    })
   }
 
   handleNameChange = (event) => {
