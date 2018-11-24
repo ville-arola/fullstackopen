@@ -2,7 +2,7 @@ import React from 'react'
 import Person from './components/Person'
 import FilterForm from './components/FilterForm'
 import AddPersonForm from './components/AddPersonForm';
-import axios from 'axios'
+import personService from './services/persons'
 
 class App extends React.Component {
     constructor(props) {
@@ -21,10 +21,9 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                this.setState({persons: response.data})
+        personService.getAll()
+            .then(persons => {
+                this.setState({persons})
         })
     }
 
@@ -47,11 +46,10 @@ class App extends React.Component {
                 name: this.state.newName,
                 number: this.state.newNumber,
             }
-            axios
-                .post('http://localhost:3001/persons', person)
-                .then(response => {
+            personService.create(person)
+                .then(person => {
                 this.setState({
-                    persons: this.state.persons.concat(response.data),
+                    persons: this.state.persons.concat(person),
                     newName: '',
                     newNumber: '',
                 })
