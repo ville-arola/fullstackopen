@@ -56,6 +56,26 @@ class App extends React.Component {
             })
         }
     }
+
+    removePerson = (id) => {
+        return () => {
+            var name = this.state.persons.find(person => {
+                return person.id === id
+            }).name;
+            if (window.confirm('Poistetaanko ' + name + '?')) {
+                personService.remove(id)
+                    .then(removed => {
+                        if (removed) {
+                            this.setState({
+                                persons: this.state.persons.filter(person => {
+                                    return person.id !== id
+                                })
+                            })
+                        }
+                    })
+            }
+        }
+    }
   
     render() {
       const filteredPersons = this.state.persons.filter(person => {
@@ -74,7 +94,7 @@ class App extends React.Component {
                          handleNameChange = {this.handleNameChange}
                          handleNumberChange = {this.handleNumberChange} />
           <h2>Numerot</h2>
-          {filteredPersons.map(person => <Person key={person.name} person={person} />)}
+          {filteredPersons.map(person => <Person key={person.id} person={person} remove={this.removePerson(person.id)} />)}
         </div>
       )
     }
