@@ -2,12 +2,13 @@ import React from 'react'
 import Person from './components/Person'
 import FilterForm from './components/FilterForm'
 import AddPersonForm from './components/AddPersonForm';
+import axios from 'axios'
 
 class App extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-          persons: props.persons,
+          persons: [],
           newName: '',
           newNumber: '',
           nameFilter: '',
@@ -17,6 +18,14 @@ class App extends React.Component {
       this.handleNameChange = this.handleNameChange.bind(this)
       this.handleNumberChange = this.handleNumberChange.bind(this)
       this.addPerson = this.addPerson.bind(this)
+    }
+
+    componentDidMount() {
+        axios
+            .get('http://localhost:3001/persons')
+            .then(response => {
+                this.setState({persons: response.data})
+        })
     }
 
     handleNameFilterChange = (event) => {
