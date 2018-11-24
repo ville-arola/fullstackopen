@@ -1,7 +1,8 @@
 import React from 'react'
 import Person from './components/Person'
 import FilterForm from './components/FilterForm'
-import AddPersonForm from './components/AddPersonForm';
+import AddPersonForm from './components/AddPersonForm'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 class App extends React.Component {
@@ -12,6 +13,7 @@ class App extends React.Component {
           newName: '',
           newNumber: '',
           nameFilter: '',
+          notification: null,
       }
 
       this.handleNameFilterChange = this.handleNameFilterChange.bind(this)
@@ -52,7 +54,11 @@ class App extends React.Component {
                     persons: this.state.persons.concat(person),
                     newName: '',
                     newNumber: '',
+                    notification: 'Lisättiin ' + person.name,
                 })
+                setTimeout(() => {
+                    this.setState({notification: null})
+                }, 5000)
             })
         }
     }
@@ -69,8 +75,12 @@ class App extends React.Component {
                             this.setState({
                                 persons: this.state.persons.filter(person => {
                                     return person.id !== id
-                                })
+                                }),
+                                notification: 'Henkilö poistettu',
                             })
+                            setTimeout(() => {
+                                this.setState({notification: null})
+                            }, 5000)
                         }
                     })
             }
@@ -83,6 +93,7 @@ class App extends React.Component {
   
       return (
         <div>
+          <Notification message={this.state.notification} />
           <h2>Puhelinluettelo</h2>
           <FilterForm value={this.state.nameFilter}
                       handler = {this.handleNameFilterChange} />
