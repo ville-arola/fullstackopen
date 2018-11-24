@@ -1,23 +1,12 @@
 import React from 'react'
 
-class FilterForm extends React.Component {
+const FilterForm = (props) => {
 
-    constructor(props) {
-        super(props)
-        this.parent = props.parent
-    }
-  
-    handleNameFilterChange = (event) => {
-        this.parent.setState({ nameFilter: event.target.value })
-    }
-
-    render() {
-        return (
-            <div>
-                rajaa näytettäviä: <input value={this.parent.nameFilter} onChange={this.handleNameFilterChange} />
-            </div>
-        )
-    }
+    return (
+        <div>
+            rajaa näytettäviä: <input value={props.value} onChange={props.handler} />
+        </div>
+    )
   }
 
   export default FilterForm
