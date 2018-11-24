@@ -76,7 +76,6 @@ class App extends React.Component {
             }
         }
     }
-  
     render() {
       const filteredPersons = this.state.persons.filter(person => {
         return person.name.toLocaleLowerCase().indexOf(this.state.nameFilter.toLocaleLowerCase()) !== -1;
